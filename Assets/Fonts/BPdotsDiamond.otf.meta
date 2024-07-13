@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 651e5430a3beebc46a15f128bf8f346d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - BPdotsDiamond
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4278c338e9948e34d930f9ce051bfd5e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

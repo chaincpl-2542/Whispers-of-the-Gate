@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1c7c1b583e7521b4186c29f12c888cf8
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - BPdotsVertical
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a0f8bb69767079c47acede94705d98bc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
