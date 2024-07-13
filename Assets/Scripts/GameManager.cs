@@ -1,9 +1,9 @@
-using System.Net.Mime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int combo;
     private bool timerRunning = false;
     private bool isStart;
+    public TextMeshProUGUI textFinalScore;
+    public GameObject finalScore;
 
     public void Update()
     {
@@ -162,6 +164,8 @@ public class GameManager : MonoBehaviour
     {
         isStart = false;
         timerRunning = false;
+        textFinalScore.text = "Score : " + score.ToString();
+        finalScore.SetActive(true);
     }
 
     IEnumerator DelayStartGame()
@@ -177,6 +181,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(container.transform.GetChild(i).gameObject);
         }
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 #endregion
