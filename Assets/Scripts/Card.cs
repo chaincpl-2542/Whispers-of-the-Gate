@@ -30,6 +30,7 @@ public class Card : MonoBehaviour
     public void SetObject(Sprite _object, int _index)
     {
         imageObject.sprite = _object;
+        print(_index);
         cardIndex = _index;
     }
 

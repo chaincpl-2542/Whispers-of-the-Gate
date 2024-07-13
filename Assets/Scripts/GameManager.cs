@@ -27,14 +27,6 @@ public class GameManager : MonoBehaviour
     private bool timerRunning = false;
     private bool isStart;
 
-    // Start is called before the first frame update
-    void Start()
-    {   
-        StartGame();
-        GenerateCard(row * col);
-        container.GetComponent<GridLayoutGroup>().constraintCount = col;
-    }
-
     public void Update()
     {
         if(isStart)
@@ -85,23 +77,25 @@ public class GameManager : MonoBehaviour
             currentCard.Add(child);
             cardRandomList.Add(child.gameObject);
         }
-
+    
         List<Sprite> remainingSprites = new List<Sprite>(imageObject);
-        for (int i = 0; i < imageObject.Length; i++)
+        for (int i = 0; i < currentCard.Count; i++)
         {
-            if (remainingSprites.Count == 0)
+            if (cardRandomList.Count == 0)
             {
                 break;
             }
-            int randomNum = Random.Range(0, remainingSprites.Count);
+
+            int randomSpriteNum = Random.Range(0, remainingSprites.Count);
+            
             for (int j = 0; j < 2; j++)
             {
-                int cardNum = Random.Range(0, cardRandomList.Count);
-
-                cardRandomList[cardNum].GetComponent<Card>().SetObject(remainingSprites[randomNum],i);
-                cardRandomList.RemoveAt(cardNum);
+                int randomCardNum = Random.Range(0, cardRandomList.Count);
+                
+                cardRandomList[randomCardNum].GetComponent<Card>().SetObject(remainingSprites[randomSpriteNum],i);
+                cardRandomList.RemoveAt(randomCardNum);
             }
-            remainingSprites.RemoveAt(randomNum);
+            remainingSprites.RemoveAt(randomSpriteNum);
         }
     }
 #endregion
@@ -156,12 +150,13 @@ public class GameManager : MonoBehaviour
 #endregion
     
 #region Game condition
-    public void StartGame()
+    public void StartGame(int _row,int _col)
     {
+        GenerateCard(_row * _col);
+        container.GetComponent<GridLayoutGroup>().constraintCount = _col;
         StartCoroutine(DelayStartGame());
         currentTime = maxTime; // Reset timer to starting value
     }
-
 
     public void EndGame()
     {
