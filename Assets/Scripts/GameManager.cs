@@ -14,18 +14,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Card> currentCard;
     public Card card1;
     public Card card2;
-
+    public SoundManager soundManager;
     [Header("Game Setting")]
     [SerializeField] private int row;
     [SerializeField] private int col;
     [SerializeField] private float maxTime;
     public float delayStartTime;
     public float currentTime;
+    public int difficultMode;
     private int score;
     public int _score;
     private int combo;
     private bool timerRunning = false;
     private bool isStart;
+    
     public TextMeshProUGUI textFinalScore;
     public GameObject finalScore;
 
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         if(isStart)
         {
+            
             if(card1 && card2)
             {
                 CardCheck();
@@ -51,9 +54,16 @@ public class GameManager : MonoBehaviour
             {
                 EndGame();
             }
+
+            if(currentTime <= 0)
+            {
+                TimeUp();
+            }
         }
-        
+        GetComponent<UIManager>().LoadScore();
         _score = score;
+
+        
     }
 
 #region GenerateCard
@@ -113,6 +123,7 @@ public class GameManager : MonoBehaviour
         {
             GetSecondCard(selectedCard);
         }
+        soundManager.PlayDoorSound();
     }
     private void GetFirstCard(Card selectedCard)
     {
@@ -137,6 +148,7 @@ public class GameManager : MonoBehaviour
             currentCard.Remove(card2.GetComponent<Card>());
 
             GetScore(scoreText);
+            soundManager.PlayCorrectSound();
             
         }
         else
@@ -144,6 +156,7 @@ public class GameManager : MonoBehaviour
             card1.CardReset();
             card2.CardReset();
             combo = 0;
+            soundManager.PlayWrongSound();
         }
 
         card1 = null;
@@ -165,7 +178,18 @@ public class GameManager : MonoBehaviour
         isStart = false;
         timerRunning = false;
         textFinalScore.text = "Score : " + score.ToString();
+        SaveScore(score,difficultMode);
         finalScore.SetActive(true);
+    }
+
+    public void TimeUp()
+    {
+        isStart = false;
+        timerRunning = false;
+        soundManager.PlayGameOverSound();
+        textFinalScore.text = "Score : " + score.ToString();
+        finalScore.SetActive(true);
+        SaveScore(score,difficultMode);
     }
 
     IEnumerator DelayStartGame()
@@ -195,7 +219,36 @@ public class GameManager : MonoBehaviour
     {
         combo++;
         score += 1000 * combo;
+        
         _scoreText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + (1000 * combo).ToString();
+    }
+
+    public void SaveScore(int currentScore, int mode)
+    {
+        if(mode == 1)
+        {
+            int highScore = PlayerPrefs.GetInt("Easy");
+            if(currentScore >= highScore)
+            {
+                PlayerPrefs.SetInt("Easy", currentScore);
+            }
+        }
+        else if(mode == 2)
+        {
+            int highScore = PlayerPrefs.GetInt("Hard");
+            if(currentScore >= highScore)
+            {
+                PlayerPrefs.SetInt("Hard", currentScore);
+            }
+        }
+        else if(mode == 3)
+        {
+            int highScore = PlayerPrefs.GetInt("Challenge");
+            if(currentScore >= highScore)
+            {
+                PlayerPrefs.SetInt("Challenge", currentScore);
+            }
+        }
     }
 #endregion
 }
